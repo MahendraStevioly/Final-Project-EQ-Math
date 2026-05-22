@@ -10,9 +10,9 @@
             <h1 class="text-3xl font-bold text-slate-900">Data Siswa</h1>
             <p class="text-slate-500 mt-1">Kelola data siswa terdaftar</p>
         </div>
-        <button onclick="window.print()" class="inline-flex items-center px-4 py-2 border border-slate-200 rounded-xl hover:bg-slate-50 transition text-sm font-medium text-slate-600">
-            <i class="fas fa-print mr-2"></i> Cetak
-        </button>
+        <a href="{{ route('admin.siswa.export') }}" class="inline-flex items-center px-4 py-2 border border-slate-200 rounded-xl hover:bg-slate-50 transition text-sm font-medium text-slate-600">
+            <i class="fas fa-file-excel mr-2"></i> Cetak
+        </a>
     </div>
 </div>
 

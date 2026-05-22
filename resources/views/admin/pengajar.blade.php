@@ -40,9 +40,9 @@
                 <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400"></i>
             </div>
             <div class="flex items-center space-x-2">
-                <button onclick="window.print()" class="inline-flex items-center px-4 py-2 border border-slate-200 rounded-xl hover:bg-slate-50 transition text-sm font-medium text-slate-600">
-                    <i class="fas fa-print mr-2"></i> Cetak
-                </button>
+                <a href="{{ route('admin.pengajar.export') }}" class="inline-flex items-center px-4 py-2 border border-slate-200 rounded-xl hover:bg-slate-50 transition text-sm font-medium text-slate-600">
+                    <i class="fas fa-file-excel mr-2"></i> Cetak
+                </a>
             </div>
         </div>
     </div>

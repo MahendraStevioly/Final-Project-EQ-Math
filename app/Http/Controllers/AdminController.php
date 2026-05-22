@@ -10,6 +10,12 @@ use App\Models\MasterPengajar;
 use App\Models\MasterKelas;
 use App\Models\JadwalKelas;
 use App\Models\TransaksiPembayaran;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\AdminTransaksiExport;
+use App\Exports\AdminPengajarExport;
+use App\Exports\AdminJadwalExport;
+use App\Exports\AdminSiswaExport;
+use App\Exports\AdminKelasExport;
 
 class AdminController extends Controller
 {
@@ -72,6 +78,11 @@ class AdminController extends Controller
         return redirect()->route('admin.pengajar.index')->with(['message' => 'Pengajar berhasil dihapus', 'message_type' => 'success']);
     }
 
+    public function exportPengajar()
+    {
+        return Excel::download(new AdminPengajarExport, 'daftar-pengajar-eqmath.xlsx');
+    }
+
     // --- KELAS ---
     public function kelasIndex()
     {
@@ -115,6 +126,11 @@ class AdminController extends Controller
         return redirect()->route('admin.kelas.index')->with(['message' => 'Kelas berhasil dihapus', 'message_type' => 'success']);
     }
 
+    public function exportKelas()
+    {
+        return Excel::download(new AdminKelasExport, 'daftar-kelas-eqmath.xlsx');
+    }
+
     // --- JADWAL ---
     public function jadwalIndex()
     {
@@ -136,12 +152,6 @@ class AdminController extends Controller
             'jam_selesai' => 'required|date_format:H:i|after:jam_mulai',
         ]);
 
-        // --------------------------------------------------------------------------
-        // VALIDASI KONFLIK JADWAL (ADMIN - STORE)
-        // --------------------------------------------------------------------------
-        // Logika Overlap: Waktu 1 (database) beririsan dengan Waktu 2 (request input)
-        // Jika (Start 1 < End 2) DAN (End 1 > Start 2), maka terjadi bentrok/overlap.
-        // --------------------------------------------------------------------------
         $clash = JadwalKelas::where('pengajar_id', $request->pengajar_id)
             ->where('hari', $request->hari)
             ->where(function ($query) use ($request) {
@@ -171,15 +181,9 @@ class AdminController extends Controller
             'status' => 'required|in:active,upcoming,completed'
         ]);
 
-        // --------------------------------------------------------------------------
-        // VALIDASI KONFLIK JADWAL (ADMIN - UPDATE)
-        // --------------------------------------------------------------------------
-        // Pengecekan sama seperti fungsi Store, namun kita mengecualikan ID jadwal
-        // yang sedang di-edit agar tidak memvalidasi dirinya sendiri.
-        // --------------------------------------------------------------------------
         $clash = JadwalKelas::where('pengajar_id', $request->pengajar_id)
             ->where('hari', $request->hari)
-            ->where('id', '!=', $id) // Abaikan ID jadwal yang sedang diedit
+            ->where('id', '!=', $id)
             ->where(function ($query) use ($request) {
                 $query->where('jam_mulai', '<', $request->jam_selesai)
                       ->where('jam_selesai', '>', $request->jam_mulai);
@@ -201,6 +205,11 @@ class AdminController extends Controller
     {
         JadwalKelas::destroy($id);
         return redirect()->route('admin.jadwal.index')->with(['message' => 'Jadwal berhasil dihapus', 'message_type' => 'success']);
+    }
+
+    public function exportJadwal()
+    {
+        return Excel::download(new AdminJadwalExport, 'daftar-jadwal-eqmath.xlsx');
     }
 
     // --- PEMBAYARAN ---
@@ -238,10 +247,14 @@ class AdminController extends Controller
         ]);
     }
 
+    public function exportTransaksi()
+    {
+        return Excel::download(new AdminTransaksiExport, 'laporan-transaksi-eqmath.xlsx');
+    }
+
     // --- SISWA ---
     public function siswaIndex()
     {
-        // Get all siswa with their latest settled class
         $siswa = User::where('role', 'siswa')
             ->with(['transaksiPembayaran' => function ($query) {
                 $query->with('jadwalKelas.masterKelas')
@@ -252,6 +265,11 @@ class AdminController extends Controller
             ->get();
 
         return view('admin.siswa', compact('siswa'));
+    }
+
+    public function exportSiswa()
+    {
+        return Excel::download(new AdminSiswaExport, 'daftar-siswa-eqmath.xlsx');
     }
 
     // --- PENGATURAN ---

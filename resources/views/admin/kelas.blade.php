@@ -10,9 +10,14 @@
             <h1 class="text-3xl font-bold text-slate-900">Data Kelas</h1>
             <p class="text-slate-500 mt-1">Kelola master data kelas matematika</p>
         </div>
-        <button onclick="openModal('tambahModal')" class="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition font-medium shadow-sm">
-            <i class="fas fa-plus mr-2"></i> Tambah Kelas
-        </button>
+        <div class="flex items-center space-x-2">
+            <a href="{{ route('admin.kelas.export') }}" class="inline-flex items-center px-4 py-2 border border-slate-200 rounded-xl hover:bg-slate-50 transition text-sm font-medium text-slate-600">
+                <i class="fas fa-file-excel mr-2"></i> Cetak
+            </a>
+            <button onclick="openModal('tambahModal')" class="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition font-medium shadow-sm">
+                <i class="fas fa-plus mr-2"></i> Tambah Kelas
+            </button>
+        </div>
     </div>
 </div>
 

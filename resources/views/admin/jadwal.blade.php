@@ -60,9 +60,9 @@
     <div class="p-6 border-b border-slate-200">
         <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <h3 class="text-lg font-semibold text-slate-900">Daftar Jadwal Kelas</h3>
-            <button onclick="window.print()" class="inline-flex items-center px-4 py-2 border border-slate-200 rounded-xl hover:bg-slate-50 transition text-sm font-medium text-slate-600">
-                <i class="fas fa-print mr-2"></i> Cetak
-            </button>
+            <a href="{{ route('admin.jadwal.export') }}" class="inline-flex items-center px-4 py-2 border border-slate-200 rounded-xl hover:bg-slate-50 transition text-sm font-medium text-slate-600">
+                <i class="fas fa-file-excel mr-2"></i> Cetak
+            </a>
         </div>
     </div>
 

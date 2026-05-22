@@ -7,6 +7,8 @@ use App\Models\TransaksiPembayaran;
 use App\Models\MasterKelas;
 use App\Models\JadwalKelas;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\SiswaRiwayatExport;
 
 class SiswaController extends Controller
 {
@@ -86,6 +88,11 @@ class SiswaController extends Controller
             ->get();
             
         return view('siswa.riwayat', compact('riwayats'));
+    }
+
+    public function exportRiwayat()
+    {
+        return Excel::download(new SiswaRiwayatExport, 'riwayat-pembayaran-saya.xlsx');
     }
 
     public function kelasSaya()

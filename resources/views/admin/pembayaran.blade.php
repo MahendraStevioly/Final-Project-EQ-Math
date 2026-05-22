@@ -10,9 +10,9 @@
             <h1 class="text-3xl font-bold text-slate-900">Data Pembayaran</h1>
             <p class="text-slate-500 mt-1">Kelola transaksi pembayaran siswa</p>
         </div>
-        <button onclick="window.print()" class="inline-flex items-center px-4 py-2 border border-slate-200 rounded-xl hover:bg-slate-50 transition text-sm font-medium text-slate-600">
-            <i class="fas fa-print mr-2"></i> Cetak Laporan
-        </button>
+        <a href="{{ route('admin.transaksi.export') }}" class="inline-flex items-center px-4 py-2 border border-slate-200 rounded-xl hover:bg-slate-50 transition text-sm font-medium text-slate-600">
+            <i class="fas fa-file-excel mr-2"></i> Cetak Laporan
+        </a>
     </div>
 </div>
 

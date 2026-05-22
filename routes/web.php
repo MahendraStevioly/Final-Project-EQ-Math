@@ -34,6 +34,7 @@ Route::middleware(['auth', 'role:siswa', 'autocutoff'])->prefix('siswa')->name('
     Route::post('payment/process', [PaymentController::class, 'process'])->name('payment.process');
     Route::post('payment/cancel/{id}', [PaymentController::class, 'cancelPayment'])->name('payment.cancel');
     Route::get('riwayat', [SiswaController::class, 'riwayat'])->name('riwayat');
+    Route::get('riwayat/export', [SiswaController::class, 'exportRiwayat'])->name('riwayat.export');
     Route::get('kelas-saya', [SiswaController::class, 'kelasSaya'])->name('kelas_saya');
     Route::get('bantuan', [SiswaController::class, 'bantuan'])->name('bantuan');
 });
@@ -47,25 +48,30 @@ Route::middleware(['auth', 'role:admin', 'autocutoff'])->prefix('admin')->name('
     Route::post('pengajar', [AdminController::class, 'pengajarStore'])->name('pengajar.store');
     Route::post('pengajar/{id}/update', [AdminController::class, 'pengajarUpdate'])->name('pengajar.update');
     Route::get('pengajar/{id}/delete', [AdminController::class, 'pengajarDestroy'])->name('pengajar.destroy');
+    Route::get('pengajar/export', [AdminController::class, 'exportPengajar'])->name('pengajar.export');
 
     // Kelas
     Route::get('kelas', [AdminController::class, 'kelasIndex'])->name('kelas.index');
     Route::post('kelas', [AdminController::class, 'kelasStore'])->name('kelas.store');
     Route::post('kelas/{id}/update', [AdminController::class, 'kelasUpdate'])->name('kelas.update');
     Route::get('kelas/{id}/delete', [AdminController::class, 'kelasDestroy'])->name('kelas.destroy');
+    Route::get('kelas/export', [AdminController::class, 'exportKelas'])->name('kelas.export');
 
     // Jadwal
     Route::get('jadwal', [AdminController::class, 'jadwalIndex'])->name('jadwal.index');
     Route::post('jadwal', [AdminController::class, 'jadwalStore'])->name('jadwal.store');
     Route::post('jadwal/{id}/update', [AdminController::class, 'jadwalUpdate'])->name('jadwal.update');
     Route::get('jadwal/{id}/delete', [AdminController::class, 'jadwalDestroy'])->name('jadwal.destroy');
+    Route::get('jadwal/export', [AdminController::class, 'exportJadwal'])->name('jadwal.export');
 
     // Pembayaran
     Route::get('pembayaran', [AdminController::class, 'pembayaranIndex'])->name('pembayaran.index');
     Route::post('pembayaran/{id}/status', [AdminController::class, 'updatePembayaranStatus'])->name('pembayaran.update');
+    Route::get('transaksi/export', [AdminController::class, 'exportTransaksi'])->name('transaksi.export');
 
     // Siswa
     Route::get('siswa', [AdminController::class, 'siswaIndex'])->name('siswa.index');
+    Route::get('siswa/export', [AdminController::class, 'exportSiswa'])->name('siswa.export');
 
     // Pengaturan
     Route::get('pengaturan', [AdminController::class, 'pengaturanIndex'])->name('pengaturan.index');
